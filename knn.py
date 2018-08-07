@@ -21,9 +21,6 @@ def cleanoutdata(dataset):#数据清洗
                     break
 
 def precondition(dataset):
-    #将离散型数据换算成数值数据
-    #knn只能处理离散性数据，其中离散性数据应该映射到数据上
-
     dict={'Private':0,'Self-emp-not-inc':1,'Self-emp-inc':2,'Federal-gov':3,
           'Local-gov':4,'State-gov':5,'Without-pay':6,'Never-worked':7,
           'Bachelors':0,'Some-college':1,'11th':2,'HS-grad':3,'Prof-school':4,
@@ -62,6 +59,7 @@ def norm(dataset):#归一化数据，将所有的数据集中在【0，1】中�
     normdata=normdata/tile(ranges,(m,1))
     return normdata
 
+
 def classify(testdataset,dataset,testlabels,labels,k,correct):
     datasetsize=dataset.shape[0]
     j=0
@@ -90,10 +88,16 @@ def dict2list(dic:dict):#将字典转换为list类型
 correct=0
 datasetname = r"C:\Users\yang\Desktop\adult.data"           #训练集
 dataset,labels=createdataset(datasetname)
-dataset=norm(dataset)#归一化训练集
+
 testdatasetname=r"C:\Users\yang\Desktop\adult.test"         #测试集
 testdataset,testlabels=createdataset(testdatasetname)
-testdataset=norm(testdataset)#归一化测试集
-correct=classify(testdataset,dataset,testlabels,labels,10,correct)  #分类过程
+
+k=1
+correct=classify(testdataset,dataset,testlabels,labels,k,correct)  #分类过程
+print("准确率：")
+print(correct/len(testdataset))
+correct=0
+k=3
+correct=classify(testdataset,dataset,testlabels,labels,k,correct)  #分类过程
 print("准确率：")
 print(correct/len(testdataset))
